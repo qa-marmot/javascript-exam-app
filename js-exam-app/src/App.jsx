@@ -129,14 +129,12 @@ export default function ExamApp() {
             <h1 className="text-4xl font-bold text-gray-800 mb-4">
               JavaScript理解度チェック試験
             </h1>
-            <p className="text-gray-600 mb-8">確認試験</p>
-
             <div className="mb-8">
               <p className="text-lg text-gray-700 mb-2">
                 レベルを選択してください
               </p>
               <p className="text-sm text-gray-500">
-                各レベル60問、時間制限なし
+                各レベル40問、時間制限なし
               </p>
             </div>
 
@@ -147,7 +145,7 @@ export default function ExamApp() {
               >
                 <div className="text-3xl font-bold mb-2">初級</div>
                 <div className="text-sm opacity-90">基礎文法と基本機能</div>
-                <div className="text-xs mt-2 opacity-75">60問</div>
+                <div className="text-xs mt-2 opacity-75">40問</div>
               </button>
 
               <button
@@ -156,7 +154,7 @@ export default function ExamApp() {
               >
                 <div className="text-3xl font-bold mb-2">中級</div>
                 <div className="text-sm opacity-90">実践的な機能と応用</div>
-                <div className="text-xs mt-2 opacity-75">60問</div>
+                <div className="text-xs mt-2 opacity-75">40問</div>
               </button>
 
               <button
@@ -167,12 +165,12 @@ export default function ExamApp() {
                 <div className="text-sm opacity-90">
                   JavaScriptの新機能と高度な技術
                 </div>
-                <div className="text-xs mt-2 opacity-75">60問</div>
+                <div className="text-xs mt-2 opacity-75">40問</div>
               </button>
             </div>
 
             <div className="mt-12 text-sm text-gray-600">
-              <p>合格ライン: 70%以上 (42問以上正解)</p>
+              <p>合格ライン: 70%以上 (28問以上正解)</p>
             </div>
           </div>
         </div>
