@@ -8,7 +8,7 @@ export const beginnerQuestions = [
     id: 1,
     category: 'JavaScript初級',
     question: 'JavaScriptで変数を宣言するキーワードとして正しいものはどれですか？',
-    options: ['var', 'define', 'int', 'letvar'],
+    options: ['let', 'define', 'int', 'letvar'],
     correct: 0,
     explanation: 'JavaScriptでは var / let / const を使って変数を宣言します。var は関数スコープを持ちます。https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Grammar_and_types'
   },
@@ -16,7 +16,7 @@ export const beginnerQuestions = [
     id: 2,
     category: 'JavaScript初級',
     question: '定数を宣言するためのキーワードはどれですか？',
-    options: ['var', 'static', 'const', 'final'],
+    options: ['let', 'static', 'const', 'final'],
     correct: 2,
     explanation: 'const は再代入できない変数（定数）を宣言します。https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/const'
   },
@@ -103,7 +103,7 @@ export const beginnerQuestions = [
   {
     id: 13,
     category: 'JavaScript初級',
-    question: 'for ループの開始キーワードはどれですか？',
+    question: 'ループの開始キーワードはどれですか？',
     options: ['loop', 'for', 'while', 'repeat'],
     correct: 1,
     explanation: 'for 文は繰り返し処理に使用されます。https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for'
@@ -208,7 +208,7 @@ export const beginnerQuestions = [
   {
     id: 26,
     category: 'JavaScript初級',
-    question: '関数を呼び出す正しい書き方はどれですか？',
+    question: '関数を呼び出す正しい書き方はどれですか？(funcは関数名)',
     options: ['func', 'call func', 'func()', 'run func'],
     correct: 2,
     explanation: '関数名の後に () を付けて呼び出します。https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Functions'
