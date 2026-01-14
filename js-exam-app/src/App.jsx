@@ -13,7 +13,7 @@ const questionSets = {
   advanced: advancedQuestions,
 };
 
-export default function PHP8ExamApp() {
+export default function ExamApp() {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -127,9 +127,9 @@ export default function PHP8ExamApp() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
             <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              PHP8技術者認定試験
+              JavaScript理解度チェック試験
             </h1>
-            <p className="text-gray-600 mb-8">初級模擬試験</p>
+            <p className="text-gray-600 mb-8">確認試験</p>
 
             <div className="mb-8">
               <p className="text-lg text-gray-700 mb-2">
@@ -165,7 +165,7 @@ export default function PHP8ExamApp() {
               >
                 <div className="text-3xl font-bold mb-2">上級</div>
                 <div className="text-sm opacity-90">
-                  PHP8の新機能と高度な技術
+                  JavaScriptの新機能と高度な技術
                 </div>
                 <div className="text-xs mt-2 opacity-75">60問</div>
               </button>
@@ -216,7 +216,7 @@ export default function PHP8ExamApp() {
                 試験結果
               </h1>
               <p className="text-gray-600">
-                PHP8技術者認定試験 {levelNames[selectedLevel]}
+                JavaScript理解度チェック試験 {levelNames[selectedLevel]}
               </p>
             </div>
 
@@ -365,7 +365,7 @@ export default function PHP8ExamApp() {
           >
             <div className="flex justify-between items-center mb-2">
               <h1 className="text-2xl font-bold">
-                PHP8技術者認定試験 {levelNames[selectedLevel]}
+                JavaScript理解度チェック試験 {levelNames[selectedLevel]}
               </h1>
               <button
                 onClick={handleBackToMenu}
