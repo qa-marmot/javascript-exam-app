@@ -363,13 +363,13 @@ export default function ExamApp() {
           >
             <div className="flex justify-between items-center mb-2">
               <h1 className="text-2xl font-bold">
-                JavaScript理解度チェック試験 {levelNames[selectedLevel]}
+                JavaScript理解度チェック試験 <br /> {levelNames[selectedLevel]}
               </h1>
               <button
                 onClick={handleBackToMenu}
-                className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all flex items-center"
+                className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all flex items-center whitespace-nowrap"
               >
-                <Home size={18} className="mr-2" />
+                <Home size={14} className="mr-2" />
                 メニュー
               </button>
             </div>
