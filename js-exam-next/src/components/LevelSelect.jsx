@@ -1,4 +1,6 @@
-export default function LevelSelectScreen({ exam }) {
+"use client";
+
+export default function LevelSelectScreen({ exam, isLoggedIn }) {
   const { handleLevelSelect } = exam;
 
   return (
@@ -50,6 +52,9 @@ export default function LevelSelectScreen({ exam }) {
 
           <div className="mt-12 text-sm text-gray-600">
             <p>合格ライン: 70%以上 (28問以上正解)</p>
+            {isLoggedIn && (
+              <p className="text-green-600 mt-2">ログイン中なので履歴が保存されます</p>
+            )}
           </div>
         </div>
       </div>

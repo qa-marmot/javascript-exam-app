@@ -1,5 +1,6 @@
-import { CheckCircle, XCircle, Home } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import { linkify } from "../utils/linkify";
+import { saveExamResult } from "../lib/saveExamResult"; // 履歴保存
 
 export default function QuestionView({ exam }) {
   const {
@@ -11,7 +12,6 @@ export default function QuestionView({ exam }) {
     score,
     handleAnswer,
     handleNext,
-    handleBackToMenu,
   } = exam;
 
   const questions = questionSets[selectedLevel];
@@ -24,15 +24,37 @@ export default function QuestionView({ exam }) {
     advanced: "from-purple-500 to-purple-600",
   };
 
+  // handleNext をラップして最後の問題で履歴を保存
+  const handleNextWithSave = async () => {
+    handleNext();
+
+    // 最後の問題の場合のみ保存
+    if (currentQuestion === questions.length - 1) {
+      const username = localStorage.getItem("username");
+      if (username) {
+        try {
+          await saveExamResult(
+            username,
+            selectedLevel,
+            score,
+            questions.length
+          );
+          console.log("履歴を保存しました");
+        } catch (err) {
+          if (err instanceof Error) {
+            console.error("履歴保存に失敗:", err.message);
+          }
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-r from-blue-50 to-indigo-100 p-6">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
         <div
           className={`bg-linear-to-r ${levelColors[selectedLevel]} p-6 text-white`}
         >
-          <button onClick={handleBackToMenu} className="flex items-center">
-            <Home size={18} className="mr-2" /> メニュー
-          </button>
           <div className="flex justify-between items-center text-sm mb-1 text-white">
             <span>
               問題 {currentQuestion + 1} / {questions.length}
@@ -109,7 +131,7 @@ export default function QuestionView({ exam }) {
           )}
 
           <button
-            onClick={handleNext}
+            onClick={handleNextWithSave}
             disabled={!isAnswered}
             className="w-full mt-6 py-4 bg-blue-600 text-white rounded-xl"
           >

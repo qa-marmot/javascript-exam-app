@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { CheckCircle, XCircle, RotateCcw, BookOpen, Home } from "lucide-react";
-import { linkify } from "../utils/linkify";
-import { saveExamResult } from "../lib/saveExamReasult";
+import { RotateCcw, BookOpen, Home } from "lucide-react";
+import { saveExamResult } from "../lib/saveExamResult";
 
 export default function ResultView({ exam }) {
-  const savedRef = useRef(false); // ★ 二重保存防止
+  const savedRef = useRef(false);
 
   const {
     questionSets,
@@ -21,19 +20,40 @@ export default function ResultView({ exam }) {
   const questions = questionSets[selectedLevel];
   const result = getScoreLevel();
 
+  // ===== 学習履歴保存 =====
   useEffect(() => {
     if (savedRef.current) return;
+
+    // 最低限のバリデーション
+    if (!Array.isArray(answers) || answers.length === 0) {
+      console.warn("answers is empty, skip saving history");
+      return;
+    }
+
+    if (
+      typeof score !== "number" ||
+      typeof questions.length !== "number"
+    ) {
+      console.error("invalid exam result", {
+        score,
+        total: questions.length,
+      });
+      return;
+    }
 
     saveExamResult({
       level: selectedLevel,
       score,
       total: questions.length,
-    }).catch(console.error);
+      answers, // ★ 重要
+    }).catch((err) => {
+      console.error("saveExamResult failed:", err);
+    });
 
     savedRef.current = true;
-  }, [selectedLevel, score, questions.length]);
+  }, [selectedLevel, score, questions.length, answers]);
 
-  // 分野別集計
+  // ===== 分野別集計 =====
   const categoryStats = {};
   questions.forEach((q) => {
     if (!categoryStats[q.category]) {
@@ -44,6 +64,7 @@ export default function ResultView({ exam }) {
 
   answers.forEach((a) => {
     const question = questions.find((q) => q.id === a.questionId);
+    if (!question) return;
     if (a.isCorrect) {
       categoryStats[question.category].correct++;
     }
@@ -102,7 +123,7 @@ export default function ResultView({ exam }) {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3">
                       <div
-                        className={`h-3 rounded-full transition-all ${
+                        className={`h-3 rounded-full ${
                           percentage >= 70
                             ? "bg-green-500"
                             : percentage >= 50
@@ -118,61 +139,16 @@ export default function ResultView({ exam }) {
             </div>
           </div>
 
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
-              復習が必要な問題
-            </h2>
-            <div className="space-y-3">
-              {answers
-                .filter((a) => !a.isCorrect)
-                .sort((a, b) => a.questionId - b.questionId)
-                .map((a) => {
-                  const question = questions.find((q) => q.id === a.questionId);
-                  return (
-                    <div
-                      key={a.questionId}
-                      className="bg-red-50 border-l-4 border-red-500 rounded-lg p-4"
-                    >
-                      <div className="font-semibold text-gray-800 mb-2 wrap-break-word">
-                        問題{a.questionId}: {question.question}
-                      </div>
-                      <div className="text-sm text-gray-600 mb-1 wrap-break-word">
-                        <span className="text-red-600 font-semibold">
-                          あなたの回答:
-                        </span>{" "}
-                        {question.options[a.selected]}
-                      </div>
-                      <div className="text-sm text-gray-600 mb-2 wrap-break-word">
-                        <span className="text-green-600 font-semibold">
-                          正解:
-                        </span>{" "}
-                        {question.options[a.correct]}
-                      </div>
-                      <div className="text-sm text-gray-700 bg-white p-3 rounded wrap-break-word whitespace-pre-wrap">
-                        {linkify(question.explanation)}
-                      </div>
-                    </div>
-                  );
-                })}
-
-              {answers.filter((a) => !a.isCorrect).length === 0 && (
-                <div className="text-center text-green-600 font-semibold py-4">
-                  全問正解です!素晴らしい!
-                </div>
-              )}
-            </div>
-          </div>
-
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={handleBackToMenu}
-              className="w-full bg-gray-500 text-white py-4 rounded-xl font-semibold hover:bg-gray-600 transition-all flex items-center justify-center shadow-lg"
+              className="w-full bg-gray-500 text-white py-4 rounded-xl font-semibold hover:bg-gray-600 flex items-center justify-center"
             >
               <Home className="mr-2" /> メニューに戻る
             </button>
             <button
               onClick={handleReset}
-              className="w-full bg-linear-to-r from-blue-500 to-indigo-600 text-white py-4 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all flex items-center justify-center shadow-lg"
+              className="w-full bg-linear-to-r from-blue-500 to-indigo-600 text-white py-4 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 flex items-center justify-center"
             >
               <RotateCcw className="mr-2" /> もう一度挑戦する
             </button>
