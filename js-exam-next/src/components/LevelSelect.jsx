@@ -1,0 +1,58 @@
+export default function LevelSelectScreen({ exam }) {
+  const { handleLevelSelect } = exam;
+
+  return (
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            JavaScript理解度チェック試験
+          </h1>
+          <div className="mb-8">
+            <p className="text-lg text-gray-700 mb-2">
+              レベルを選択してください
+            </p>
+            <p className="text-sm text-gray-500">
+              各レベル40問、時間制限なし
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <button
+              onClick={() => handleLevelSelect("beginner")}
+              className="bg-linear-to-br from-green-400 to-green-600 text-white p-8 rounded-xl hover:from-green-500 hover:to-green-700 transition-all shadow-lg transform hover:scale-105"
+            >
+              <div className="text-3xl font-bold mb-2">初級</div>
+              <div className="text-sm opacity-90">基礎文法と基本機能</div>
+              <div className="text-xs mt-2 opacity-75">40問</div>
+            </button>
+
+            <button
+              onClick={() => handleLevelSelect("intermediate")}
+              className="bg-linear-to-br from-blue-400 to-blue-600 text-white p-8 rounded-xl hover:from-blue-500 hover:to-blue-700 transition-all shadow-lg transform hover:scale-105"
+            >
+              <div className="text-3xl font-bold mb-2">中級</div>
+              <div className="text-sm opacity-90">実践的な機能と応用</div>
+              <div className="text-xs mt-2 opacity-75">40問</div>
+            </button>
+
+            <button
+              onClick={() => handleLevelSelect("advanced")}
+              className="bg-linear-to-br from-purple-400 to-purple-600 text-white p-8 rounded-xl hover:from-purple-500 hover:to-purple-700 transition-all shadow-lg transform hover:scale-105"
+            >
+              <div className="text-3xl font-bold mb-2">上級</div>
+              <div className="text-sm opacity-90">
+                JavaScriptの新機能と高度な技術
+              </div>
+              <div className="text-xs mt-2 opacity-75">40問</div>
+            </button>
+          </div>
+
+          <div className="mt-12 text-sm text-gray-600">
+            <p>合格ライン: 70%以上 (28問以上正解)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
