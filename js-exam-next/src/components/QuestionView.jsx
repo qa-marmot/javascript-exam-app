@@ -57,7 +57,7 @@ export default function QuestionView({ exam }) {
   return (
     <div className="max-w-3xl mx-auto">
       {/* 終了ボタン - 上部に独立表示 */}
-      <div className="mb-4 flex justify-end">
+      <div className="mt-4 mb-4 flex justify-end">
         <button
           onClick={handleBackToMenu}
           className="px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 font-semibold rounded-lg shadow-md border border-gray-300 transition-colors flex items-center gap-2"
@@ -77,16 +77,16 @@ export default function QuestionView({ exam }) {
             </span>
             <span>スコア: {score}</span>
           </div>
-          <div className="w-full bg-white bg-opacity-30 h-2 rounded-full">
+          <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
             <div
-              className="bg-white h-2 rounded-full"
+              className={"h-2 rounded-full bg-green-500"}
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
 
         <div className="p-8">
-          <div className="mb-6">
+          <div className="pb-6">
             {formattedQuestion.map((part, index) => {
               if (part.type === "code") {
                 return (
@@ -161,7 +161,9 @@ export default function QuestionView({ exam }) {
                   <p className="text-gray-700 leading-relaxed wrap-break-word whitespace-pre-wrap">
                     {question.explanation}
                   </p>
-                  <p className="text-gray-700 leading-relaxed wrap-break-word whitespace-pre-wrap">{linkify(question.url)}</p>
+                  <p className="text-gray-700 leading-relaxed wrap-break-word whitespace-pre-wrap">
+                    {linkify(question.url)}
+                  </p>
                 </div>
               </div>
             </div>

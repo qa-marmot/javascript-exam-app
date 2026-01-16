@@ -33,7 +33,10 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col bg-linear-to-br from-blue-50 to-indigo-100 min-h-screen md:h-screen">
+    <div
+      className={`flex flex-col bg-linear-to-br from-blue-50 to-indigo-100
+              ${exam.showResult ? "min-h-screen" : "md:h-screen min-h-screen"}`}
+    >
       <Header
         isLoggedIn={isLoggedIn}
         mounted={mounted}
@@ -43,8 +46,12 @@ export default function Page() {
       />
 
       {/* メインコンテンツ(スクロール可能) */}
-      <main className="flex-1 overflow-auto pb-48 md:pb-32">
-        <div className="max-w-7xl mx-auto px-4 py-6 h-full">
+      <main
+        className={`flex-1 overflow-auto ${
+          !exam.showResult ? "pb-32 md:pb-32" : "pb-8"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto">
           {!exam.selectedLevel ? (
             <LevelSelectScreen exam={exam} isLoggedIn={isLoggedIn} />
           ) : exam.showResult ? (
@@ -55,8 +62,11 @@ export default function Page() {
         </div>
       </main>
 
-      {/* Footer - QuestionView以外で表示 */}
-      {(!exam.selectedLevel || exam.showResult) && <Footer />}
+      {/* Footer */}
+      {(!exam.selectedLevel || exam.showResult) && (
+        <Footer fixed={!exam.showResult && !exam.showResult} />
+        // fixed=false で PCでもフローに従う
+      )}
 
       {/* ログインモーダル */}
       {showLoginModal && (

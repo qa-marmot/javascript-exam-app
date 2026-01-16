@@ -30,10 +30,7 @@ export default function ResultView({ exam }) {
       return;
     }
 
-    if (
-      typeof score !== "number" ||
-      typeof questions.length !== "number"
-    ) {
+    if (typeof score !== "number" || typeof questions.length !== "number") {
       console.error("invalid exam result", {
         score,
         total: questions.length,
@@ -121,9 +118,9 @@ export default function ResultView({ exam }) {
                         {stats.correct}/{stats.total} ({percentage}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                       <div
-                        className={`h-3 rounded-full ${
+                        className={`h-3 rounded-l-full ${
                           percentage >= 70
                             ? "bg-green-500"
                             : percentage >= 50
