@@ -47,7 +47,7 @@ export default function Page() {
 
       {/* メインコンテンツ(スクロール可能) */}
       <main
-        className={`flex-1 overflow-auto ${
+        className={`flex-1 overflow-auto from-blue-50 ${
           !exam.showResult ? "pb-32 md:pb-32" : "pb-8"
         }`}
       >

@@ -115,7 +115,7 @@ export default function ResultView({ exam }) {
                         {category}
                       </span>
                       <span className="text-gray-600">
-                        {stats.correct}/{stats.total} ({percentage}%)
+                        {stats.correct} / {stats.total} ({percentage}%)
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
