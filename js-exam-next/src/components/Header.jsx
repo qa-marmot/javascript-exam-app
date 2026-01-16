@@ -16,10 +16,10 @@ export default function Header({
   return (
     <header className="h-16 bg-linear-to-r from-blue-600 to-indigo-600">
       <div className="max-w-7xl mx-auto h-full px-4 md:px-8 flex items-center justify-end">
-        <h1 className="text-sm md:text-lg font-bold text-white whitespace-nowrap mr-auto">
-          JS理解度チェック
+        <h1 className="text-lg md:text-2xl font-bold whitespace-nowrap mr-auto">
+          <span className="text-orange-300">Stady</span>
+          <span className="text-white">App</span>
         </h1>
-
         <div className="flex items-center gap-2 md:gap-4">
           {mounted &&
             (isLoggedIn ? (
