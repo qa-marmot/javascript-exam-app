@@ -80,7 +80,7 @@ export default function ResultView({ exam }) {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">試験結果</h1>
             <p className="text-gray-600">
-              JavaScript理解度チェック試験 {levelNames[selectedLevel]}
+              JavaScript スキルチェック {levelNames[selectedLevel]}
             </p>
           </div>
 
