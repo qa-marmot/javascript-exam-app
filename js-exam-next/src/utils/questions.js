@@ -239,8 +239,7 @@ export const beginnerQuestions = [
   {
     id: 26,
     category: "JavaScript初級",
-    question:
-      "定義した関数を実行する正しい方法はどれですか?(funcは関数名)",
+    question: "定義した関数を実行する正しい方法はどれですか?(funcは関数名)",
     options: ["func", "call func", "func()", "run func"],
     correct: 2,
     explanation: "関数名の後に () を付けて呼び出します。",
@@ -456,8 +455,7 @@ export const intermediateQuestions = [
   {
     id: 45,
     category: "JavaScript中級",
-    question:
-      "引数にデフォルト値を設定する正しい書き方はどれですか?",
+    question: "引数にデフォルト値を設定する正しい書き方はどれですか?",
     options: ["a = 1", "a := 1", "a == 1", "default a = 1"],
     correct: 0,
     explanation: "引数のデフォルト値は = を使って設定します。",
@@ -491,8 +489,7 @@ export const intermediateQuestions = [
   {
     id: 48,
     category: "JavaScript中級",
-    question:
-      "条件に一致する要素だけを返す配列メソッドはどれですか?",
+    question: "条件に一致する要素だけを返す配列メソッドはどれですか?",
     options: ["map()", "reduce()", "filter()", "some()"],
     correct: 2,
     explanation: "filter() は条件に一致する要素だけを返します。",
@@ -1156,7 +1153,7 @@ export const advancedQuestions = [
   {
     id: 106,
     category: "JavaScript上級",
-    question: "尾再帰最適化(TCO)の主な効果は何ですか?",
+    question: "末尾再帰最適化(TCO)の主な効果は何ですか?",
     options: [
       "必ず有効化される",
       "再帰を禁止する",
@@ -1164,7 +1161,8 @@ export const advancedQuestions = [
       "Promise専用",
     ],
     correct: 2,
-    explanation: "尾再帰最適化(TCO)は再帰呼び出し時のスタック消費を抑えます。",
+    explanation:
+      "末尾再帰最適化(TCO)は再帰呼び出し時のスタック消費を抑えます。",
     url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions",
   },
   {
