@@ -95,7 +95,9 @@ export default function AuthForm({ onClose }) {
         <div className="w-16 h-16 mx-auto bg-linear-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
           <User className="w-10 h-10 text-white" />
         </div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">学習履歴を保存する</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          学習履歴を保存する
+        </h2>
         <p className="text-base text-gray-600 font-medium">
           ユーザー名とパスワードで管理します
         </p>
@@ -105,8 +107,8 @@ export default function AuthForm({ onClose }) {
         <button
           onClick={() => setMode("login")}
           className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
-            mode === "login" 
-              ? "bg-indigo-600 text-white shadow-lg scale-105" 
+            mode === "login"
+              ? "bg-indigo-600 text-white shadow-lg scale-105"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
@@ -115,8 +117,8 @@ export default function AuthForm({ onClose }) {
         <button
           onClick={() => setMode("signup")}
           className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
-            mode === "signup" 
-              ? "bg-indigo-600 text-white shadow-lg scale-105" 
+            mode === "signup"
+              ? "bg-indigo-600 text-white shadow-lg scale-105"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
@@ -136,14 +138,14 @@ export default function AuthForm({ onClose }) {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="ユーザー名"
-        className="w-full border-2 border-gray-300 p-3 rounded-lg mb-3 focus:border-indigo-500 focus:outline-none transition-colors"
+        className="w-full border-2 border-gray-300 p-3 rounded-lg mb-3 focus:border-indigo-500 focus:outline-none transition-colors text-gray-900"
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="パスワード"
-        className="w-full border-2 border-gray-300 p-3 rounded-lg mb-4 focus:border-indigo-500 focus:outline-none transition-colors"
+        className="w-full border-2 border-gray-300 p-3 rounded-lg mb-4 focus:border-indigo-500 focus:outline-none transition-colors text-gray-900"
       />
 
       <button
