@@ -8,7 +8,9 @@ export default function LevelSelectScreen({ exam, isLoggedIn }) {
       <div className="max-w-4xl mx-auto w-full md:mt-[9vh]">
         <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
           <h1 className="text-4xl font-bold text-gray-600 mb-4">
-            JavaScript スキルチェック
+            JavaScript
+            <br className="md:hidden" />
+            スキルチェック
           </h1>
           <div className="mb-8">
             <p className="text-base md:text-lg text-gray-600 mb-2">
