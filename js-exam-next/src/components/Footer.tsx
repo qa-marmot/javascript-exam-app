@@ -14,7 +14,7 @@ export default function Footer({ fixed = false }: FooterProps) {
         {/* サイト情報 */}
         <div>
           <h3 className="text-xl font-bold mb-3 text-white">
-            JavaScript理解度チェック
+            StydyApp
           </h3>
           <p className="text-sm text-gray-400 leading-relaxed">
             This site is a JavaScript quiz app — created for learning and
