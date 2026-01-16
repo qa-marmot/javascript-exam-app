@@ -44,7 +44,7 @@ export default function LevelSelectScreen({ exam, isLoggedIn }) {
             >
               <div className="text-3xl font-bold mb-2">上級</div>
               <div className="text-sm opacity-90">
-                JavaScriptの新機能と高度な技術
+                JavaScriptの高度な技術と知識
               </div>
               <div className="text-xs mt-2 opacity-75">40問</div>
             </button>
