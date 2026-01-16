@@ -1,6 +1,7 @@
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, XCircle, X } from "lucide-react";
 import { linkify } from "../utils/linkify";
 import { saveExamResult } from "../lib/saveExamResult"; // 履歴保存
+import { formatQuestionSimple } from "../utils/formatQuestionText";
 
 export default function QuestionView({ exam }) {
   const {
@@ -12,11 +13,15 @@ export default function QuestionView({ exam }) {
     score,
     handleAnswer,
     handleNext,
+    handleBackToMenu,
   } = exam;
 
   const questions = questionSets[selectedLevel];
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+  // 問題文を整形
+  const formattedQuestion = formatQuestionSimple(question.question);
 
   const levelColors = {
     beginner: "from-green-500 to-green-600",
@@ -50,8 +55,19 @@ export default function QuestionView({ exam }) {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-r from-blue-50 to-indigo-100 p-6">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="max-w-3xl mx-auto">
+      {/* 終了ボタン - 上部に独立表示 */}
+      <div className="mb-4 flex justify-end">
+        <button
+          onClick={handleBackToMenu}
+          className="px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 font-semibold rounded-lg shadow-md border border-gray-300 transition-colors flex items-center gap-2"
+        >
+          <X className="w-4 h-4" />
+          終了してトップに戻る
+        </button>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div
           className={`bg-linear-to-r ${levelColors[selectedLevel]} p-6 text-white`}
         >
@@ -70,9 +86,29 @@ export default function QuestionView({ exam }) {
         </div>
 
         <div className="p-8">
-          <h2 className="text-xl font-semibold mb-6 whitespace-pre-wrap text-gray-900">
-            {question.question}
-          </h2>
+          <div className="mb-6">
+            {formattedQuestion.map((part, index) => {
+              if (part.type === "code") {
+                return (
+                  <pre
+                    key={index}
+                    className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4 text-sm"
+                  >
+                    <code>{part.content}</code>
+                  </pre>
+                );
+              } else {
+                return (
+                  <h2
+                    key={index}
+                    className="text-xl font-semibold mb-3 text-gray-900"
+                  >
+                    {part.content}
+                  </h2>
+                );
+              }
+            })}
+          </div>
 
           {question.options.map((option, index) => {
             const isCorrect = index === question.correct;
@@ -123,8 +159,9 @@ export default function QuestionView({ exam }) {
                       : "不正解です"}
                   </h3>
                   <p className="text-gray-700 leading-relaxed wrap-break-word whitespace-pre-wrap">
-                    {linkify(question.explanation)}
+                    {question.explanation}
                   </p>
+                  <p className="text-gray-700 leading-relaxed wrap-break-word whitespace-pre-wrap">{linkify(question.url)}</p>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import {
   beginnerQuestions,
   intermediateQuestions,
   advancedQuestions,
-} from "../questions";
+} from "../utils/questions";
 import { shuffleArray } from "../utils/shuffle";
 
 const questionSets = {
