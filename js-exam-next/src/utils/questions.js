@@ -13,7 +13,7 @@ export const beginnerQuestions = [
   {
     id: 2,
     category: "JavaScript初級",
-    question: "再代入できない変数を宣言するキーワードはどれですか?",
+    question: "再代入できない変数(定数)を宣言するキーワードはどれですか?",
     options: ["let", "static", "const", "final"],
     correct: 2,
     explanation: "const は再代入できない変数(定数)を宣言します。",
@@ -87,7 +87,7 @@ export const beginnerQuestions = [
     id: 10,
     category: "JavaScript初級",
     question: "条件によって処理を分岐させる基本的な構文はどれですか?",
-    options: ["for", "switch", "if", "while"],
+    options: ["for", "forEach", "if", "while"],
     correct: 2,
     explanation: "if 文は条件に応じて処理を分岐します。",
     url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/if...else",
@@ -240,7 +240,7 @@ export const beginnerQuestions = [
     id: 26,
     category: "JavaScript初級",
     question:
-      "定義した関数を実行する正しい方法はどれですか?\n\nfunction func() {\n  return 123;\n}",
+      "定義した関数を実行する正しい方法はどれですか?(funcは関数名)",
     options: ["func", "call func", "func()", "run func"],
     correct: 2,
     explanation: "関数名の後に () を付けて呼び出します。",
@@ -457,7 +457,7 @@ export const intermediateQuestions = [
     id: 45,
     category: "JavaScript中級",
     question:
-      "次のコードで引数にデフォルト値を設定する正しい書き方はどれですか?",
+      "引数にデフォルト値を設定する正しい書き方はどれですか?",
     options: ["a = 1", "a := 1", "a == 1", "default a = 1"],
     correct: 0,
     explanation: "引数のデフォルト値は = を使って設定します。",
@@ -492,7 +492,7 @@ export const intermediateQuestions = [
     id: 48,
     category: "JavaScript中級",
     question:
-      "次のコードで使用されている配列メソッドはどれですか?\n\nconst arr = [1, 2, 3, 4];\nconst result = arr.filter(x => x % 2 === 0);",
+      "条件に一致する要素だけを返す配列メソッドはどれですか?",
     options: ["map()", "reduce()", "filter()", "some()"],
     correct: 2,
     explanation: "filter() は条件に一致する要素だけを返します。",
