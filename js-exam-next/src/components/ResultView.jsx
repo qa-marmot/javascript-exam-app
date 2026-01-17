@@ -1,12 +1,7 @@
 "use client";
-
-import { useEffect, useRef } from "react";
 import { RotateCcw, BookOpen, Home } from "lucide-react";
-import { saveExamResult } from "../lib/saveExamResult";
 
 export default function ResultView({ exam }) {
-  const savedRef = useRef(false);
-
   const {
     questionSets,
     selectedLevel,
@@ -19,36 +14,6 @@ export default function ResultView({ exam }) {
 
   const questions = questionSets[selectedLevel];
   const result = getScoreLevel();
-
-  // ===== 学習履歴保存 =====
-  useEffect(() => {
-    if (savedRef.current) return;
-
-    // 最低限のバリデーション
-    if (!Array.isArray(answers) || answers.length === 0) {
-      console.warn("answers is empty, skip saving history");
-      return;
-    }
-
-    if (typeof score !== "number" || typeof questions.length !== "number") {
-      console.error("invalid exam result", {
-        score,
-        total: questions.length,
-      });
-      return;
-    }
-
-    saveExamResult({
-      level: selectedLevel,
-      score,
-      total: questions.length,
-      answers, // ★ 重要
-    }).catch((err) => {
-      console.error("saveExamResult failed:", err);
-    });
-
-    savedRef.current = true;
-  }, [selectedLevel, score, questions.length, answers]);
 
   // ===== 分野別集計 =====
   const categoryStats = {};

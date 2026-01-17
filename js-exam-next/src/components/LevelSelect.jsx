@@ -4,8 +4,8 @@ export default function LevelSelectScreen({ exam, isLoggedIn }) {
   const { handleLevelSelect } = exam;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-6">
-      <div className="max-w-4xl mx-auto w-full md:mt-[9vh]">
+    <div className="min-h-dvh bg-linear-to-br from-blue-50 to-indigo-100 overflow-hidden">
+      <div className="max-w-4xl mx-auto w-full">
         <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
           <h1 className="text-4xl font-bold text-gray-600 mb-4">
             JavaScript

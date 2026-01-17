@@ -2,6 +2,7 @@ import { CheckCircle, XCircle, X } from "lucide-react";
 import { linkify } from "../utils/linkify";
 import { saveExamResult } from "../lib/saveExamResult"; // 履歴保存
 import { formatQuestionSimple } from "../utils/formatQuestionText";
+import { useRef } from "react";
 
 export default function QuestionView({ exam }) {
   const {
@@ -16,9 +17,11 @@ export default function QuestionView({ exam }) {
     handleBackToMenu,
   } = exam;
 
+  const savedRef = useRef(false);
   const questions = questionSets[selectedLevel];
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const canGoNext = isAnswered;
 
   // 問題文を整形
   const formattedQuestion = formatQuestionSimple(question.question);
@@ -29,29 +32,26 @@ export default function QuestionView({ exam }) {
     advanced: "from-purple-500 to-purple-600",
   };
 
-  // handleNext をラップして最後の問題で履歴を保存
+  // ✅ handleNext をラップして最後の問題で履歴を保存
   const handleNextWithSave = async () => {
-    handleNext();
+    const isLastQuestion = currentQuestion === questions.length - 1;
 
-    // 最後の問題の場合のみ保存
-    if (currentQuestion === questions.length - 1) {
-      const username = localStorage.getItem("username");
-      if (username) {
-        try {
-          await saveExamResult(
-            username,
-            selectedLevel,
-            score,
-            questions.length
-          );
-          console.log("履歴を保存しました");
-        } catch (err) {
-          if (err instanceof Error) {
-            console.error("履歴保存に失敗:", err.message);
-          }
-        }
+    if (isLastQuestion && !savedRef.current) {
+      try {
+        await saveExamResult({
+          level: selectedLevel,
+          score,
+          total: questions.length,
+        });
+        savedRef.current = true; // 成功後にフラグ
+        console.log("履歴を保存しました");
+      } catch (err) {
+        console.error("履歴保存に失敗:", err.message);
       }
     }
+
+    // 最後の問題では ResultView へ遷移
+    handleNext();
   };
 
   return (
@@ -69,7 +69,7 @@ export default function QuestionView({ exam }) {
 
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div
-          className={`bg-linear-to-r ${levelColors[selectedLevel]} p-6 text-white`}
+          className={`bg-gradient-to-r ${levelColors[selectedLevel]} p-6 text-white`}
         >
           <div className="flex justify-between items-center text-sm mb-1 text-white">
             <span>
@@ -79,7 +79,7 @@ export default function QuestionView({ exam }) {
           </div>
           <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
             <div
-              className={"h-2 rounded-full bg-green-500"}
+              className="h-2 rounded-full bg-green-500"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -171,8 +171,14 @@ export default function QuestionView({ exam }) {
 
           <button
             onClick={handleNextWithSave}
-            disabled={!isAnswered}
-            className="w-full mt-6 py-4 bg-blue-600 text-white rounded-xl"
+            disabled={!canGoNext}
+            className={`w-full mt-6 py-4 rounded-xl font-semibold transition
+    ${
+      canGoNext
+        ? "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+    }
+  `}
           >
             {currentQuestion < questions.length - 1
               ? "次の問題へ"
