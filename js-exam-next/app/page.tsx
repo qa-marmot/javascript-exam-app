@@ -7,7 +7,6 @@ import LevelSelectScreen from "@/src/components/LevelSelect";
 import QuestionView from "@/src/components/QuestionView";
 import ResultView from "@/src/components/ResultView";
 import AuthForm from "@/src/components/AuthForm";
-import { useRouter } from "next/navigation";
 import Footer from "@/src/components/Footer";
 import Header from "@/src/components/Header";
 
@@ -17,26 +16,35 @@ export default function Page() {
   const [mounted, setMounted] = useState(false);
 
   const exam = useExam();
-  const router = useRouter();
 
-  // マウント後に localStorage 参照
+  // ✅ Supabaseのセッション管理を使用（localStorageは使用しない）
   useEffect(() => {
     setMounted(true);
-    const username = localStorage.getItem("username");
-    setIsLoggedIn(!!username);
+    
+    // 初回のセッション確認
+    checkSession();
+    
+    // セッション変更を監視
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
+  const checkSession = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    setIsLoggedIn(!!session);
+  };
+
   const handleLogout = async () => {
-    localStorage.removeItem("username");
-    setIsLoggedIn(false);
+    // ✅ localStorageの削除は不要（Supabaseが管理）
     await supabase.auth.signOut();
+    setIsLoggedIn(false);
   };
 
   return (
-    <div
-      className={`flex flex-col bg-linear-to-br from-blue-50 to-indigo-100
-              ${exam.showResult ? "min-h-screen" : "md:h-screen min-h-screen"}`}
-    >
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
       <Header
         isLoggedIn={isLoggedIn}
         mounted={mounted}
@@ -45,13 +53,9 @@ export default function Page() {
         onBackToMenu={exam.handleBackToMenu}
       />
 
-      {/* メインコンテンツ(スクロール可能) */}
-      <main
-        className={`flex-1 overflow-auto from-blue-50 ${
-          !exam.showResult ? "pb-32 md:pb-32" : "pb-8"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto">
+      {/* メインコンテンツ */}
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 py-6">
           {!exam.selectedLevel ? (
             <LevelSelectScreen exam={exam} isLoggedIn={isLoggedIn} />
           ) : exam.showResult ? (
@@ -65,7 +69,6 @@ export default function Page() {
       {/* Footer */}
       {(!exam.selectedLevel || exam.showResult) && (
         <Footer fixed={!exam.showResult && !exam.showResult} />
-        // fixed=false で PCでもフローに従う
       )}
 
       {/* ログインモーダル */}
@@ -74,8 +77,8 @@ export default function Page() {
           <AuthForm
             onClose={() => {
               setShowLoginModal(false);
-              const username = localStorage.getItem("username");
-              setIsLoggedIn(!!username);
+              // ✅ 再度セッション確認
+              checkSession();
             }}
           />
         </div>

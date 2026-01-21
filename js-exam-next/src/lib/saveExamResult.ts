@@ -34,7 +34,7 @@ export async function saveExamResult({
     throw new Error("保存データが不正です");
   }
 
-  // ===== 保存 =====
+  // ===== 新規レコードを作成 =====
   const { error } = await supabase.from("exam_history").insert({
     user_id: session.user.id,
     level,
@@ -43,11 +43,7 @@ export async function saveExamResult({
   });
 
   if (error) {
-    console.error("saveExamResult error detail:", {
-      message: error.message,
-      details: error.details,
-      hint: error.hint,
-    });
+    console.error("saveExamResult error detail:", error);
     throw new Error("学習履歴の保存に失敗しました");
   }
 }

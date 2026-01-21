@@ -21,32 +21,45 @@ export default function HistoryPage() {
 
   useEffect(() => {
     const fetchHistory = async () => {
-      // 🔐 ログインユーザー確認
-      const {
-        data: { session },
-        error: sessionError,
-      } = await supabase.auth.getSession();
+      try {
+        // 🔐 ログインユーザーのセッション取得
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
 
-      if (sessionError || !session?.user) {
-        setErrorMessage("ログインしてください");
-        setLoading(false);
-        return;
-      }
+        if (sessionError || !session?.user) {
+          setErrorMessage("ログインしてください");
+          setLoading(false);
+          return;
+        }
 
-      // ✅ RLS により自分の履歴のみ取得される
-      const { data, error } = await supabase
-        .from("exam_history")
-        .select("id, level, score, total, created_at")
-        .order("created_at", { ascending: false });
+        const userId = session.user.id;
+        console.log("ログインユーザーID:", userId); // ← ここでID確認
 
-      if (error) {
-        console.error("履歴取得エラー:", error);
+        // ✅ 自分の履歴だけ取得（RLS対応）
+        const { data, error } = await supabase
+          .from("exam_history")
+          .select("id, level, score, total, created_at")
+          .eq("user_id", userId) // ← 自分のIDで絞る
+          .order("created_at", { ascending: false });
+
+        console.log("取得データ:", data); // ← デバッグ用
+        console.log("取得エラー:", error); // ← デバッグ用
+
+        if (error) {
+          setErrorMessage("履歴の取得に失敗しました");
+          setHistory([]);
+        } else {
+          setHistory(data ?? []);
+        }
+      } catch (err) {
+        console.error("予期せぬエラー:", err);
         setErrorMessage("履歴の取得に失敗しました");
-      } else {
-        setHistory(data ?? []);
+        setHistory([]);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchHistory();
@@ -68,21 +81,6 @@ export default function HistoryPage() {
       <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="mb-6">
-            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-              <svg
-                className="w-8 h-8 text-red-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-            </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
               ログインが必要です
             </h2>
@@ -127,21 +125,6 @@ export default function HistoryPage() {
         {/* 履歴リスト */}
         {history.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-            <div className="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <svg
-                className="w-10 h-10 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-            </div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">
               履歴がありません
             </h3>
@@ -160,7 +143,7 @@ export default function HistoryPage() {
             {history.map((item) => {
               const percentage = Math.round((item.score / item.total) * 100);
               const isGood = percentage >= 70;
-              
+
               return (
                 <div
                   key={item.id}
@@ -195,7 +178,11 @@ export default function HistoryPage() {
                         })}
                       </p>
                     </div>
-                    <div className={`text-4xl ${isGood ? "text-green-500" : "text-orange-500"}`}>
+                    <div
+                      className={`text-4xl ${
+                        isGood ? "text-green-500" : "text-orange-500"
+                      }`}
+                    >
                       {isGood ? "🎉" : "📝"}
                     </div>
                   </div>
