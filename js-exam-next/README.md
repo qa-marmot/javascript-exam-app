@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JS Exam
 
-## Getting Started
+JavaScriptの実力を試せる試験アプリケーションです。
 
-First, run the development server:
+## 概要
+
+JS Examは、JavaScriptの知識を測定するためのインタラクティブな試験プラットフォームです。複数の問題に答えて、最終的なスコアと成績レベルを確認できます。
+
+## 機能
+
+- **問題出題**: ランダムに出題される選択肢形式の問題
+- **成績評価**: 回答に基づいた自動的なスコア計算
+- **レベル判定**: 成績に応じた難易度レベルの表示
+- **履歴管理**: 過去の試験結果の保存と表示
+- **レスポンシブデザイン**: モバイル・タブレット・PC対応
+
+## 必要な環境
+
+- Node.js 18.x以上
+- npm または yarn
+
+## インストール
+
+```bash
+# リポジトリをクローン
+git clone <repository-url>
+
+# プロジェクトディレクトリに移動
+cd js-exam-next
+
+# 依存関係をインストール
+npm install
+```
+
+## セットアップ
+
+### Supabase設定
+
+このアプリケーションはSupabaseをバックエンドとして使用しています。
+
+1. [Supabase](https://supabase.com)でプロジェクトを作成
+2. プロジェクトのURLとAPIキーを取得
+3. `lib/supabaseClient.ts`でSupabaseクライアントを設定
+
+## 使用方法
+
+### 開発モード
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで `http://localhost:3000` を開いて、アプリケーションにアクセスできます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ビルド
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+### 本番環境で実行
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## プロジェクト構成
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── components/          # Reactコンポーネント
+│   ├── AuthForm.jsx     # 認証フォーム
+│   ├── Header.jsx       # ヘッダー
+│   ├── Footer.tsx       # フッター
+│   ├── LevelSelect.jsx  # レベル選択
+│   ├── QuestionView.jsx # 問題表示
+│   ├── ResultView.jsx   # 結果表示
+│   └── levelLabel.ts    # レベル表示ラベル
+├── hooks/               # カスタムフック
+│   └── useExam.js       # 試験ロジック
+├── lib/                 # ライブラリ・ユーティリティ
+│   ├── supabaseClient.ts # Supabaseクライアント
+│   └── saveExamResult.ts # 結果保存
+└── utils/               # ユーティリティ関数
+    ├── questions.js     # 問題データ
+    ├── shuffle.js       # シャッフル処理
+    ├── formatQuestionText.js # テキストフォーマット
+    └── linkify.jsx      # リンク処理
+app/
+├── page.tsx             # トップページ
+├── layout.tsx           # レイアウト
+├── globals.css          # グローバルスタイル
+└── history/
+    └── page.tsx         # 履歴ページ
+```
 
-## Deploy on Vercel
+## 使用技術
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **フレームワーク**: Next.js 16.x
+- **フロントエンド**: React 19.x、TypeScript
+- **スタイリング**: Tailwind CSS 4.x
+- **バックエンド**: Supabase
+- **アイコン**: Lucide React
+- **リンター**: ESLint
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## スクリプト
+
+| コマンド | 説明 |
+|---------|------|
+| `npm run dev` | 開発サーバーを起動 |
+| `npm run build` | 本番用ビルド |
+| `npm start` | 本番サーバーを起動 |
+| `npm run lint` | ESLintでコード検査 |

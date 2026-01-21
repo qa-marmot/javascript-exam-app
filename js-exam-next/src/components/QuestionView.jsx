@@ -1,6 +1,6 @@
 import { CheckCircle, XCircle, X } from "lucide-react";
 import { linkify } from "../utils/linkify";
-import { saveExamResult } from "../lib/saveExamResult"; // 履歴保存
+import { saveExamResult } from "../lib/saveExamResult"; 
 import { formatQuestionSimple } from "../utils/formatQuestionText";
 import { useRef } from "react";
 
@@ -69,7 +69,7 @@ export default function QuestionView({ exam }) {
 
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         <div
-          className={`bg-gradient-to-r ${levelColors[selectedLevel]} p-6 text-white`}
+          className={`bg-linear-to-r ${levelColors[selectedLevel]} p-6 text-white`}
         >
           <div className="flex justify-between items-center text-sm mb-1 text-white">
             <span>

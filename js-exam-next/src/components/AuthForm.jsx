@@ -11,13 +11,13 @@ export default function AuthForm({ onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // ✅ ユーザー名からSupabase互換のメールアドレスを生成（内部管理用）
+  // ユーザー名からSupabase互換のメールアドレスを生成（内部管理用）
   const generateInternalEmail = (username) => {
     const sanitized = username.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
     return `${sanitized}@internal.quiz-app.local`;
   };
 
-  // ✅ 入力のサニタイゼーション
+  // 入力のサニタイゼーション
   const sanitizeInput = (input) => {
     return input
       .trim()
@@ -25,7 +25,7 @@ export default function AuthForm({ onClose }) {
       .substring(0, 50);
   };
 
-  // ✅ バリデーション
+  // バリデーション
   const validateSignup = () => {
     if (!/^[a-zA-Z0-9]{6,}$/.test(username)) {
       return "ユーザー名は半角英数字6文字以上で入力してください";
@@ -66,7 +66,7 @@ export default function AuthForm({ onClose }) {
           password: sanitizedPassword,
           options: {
             data: {
-              display_name: sanitizedUsername, // ✅ ユーザー名をメタデータに保存
+              display_name: sanitizedUsername, // ユーザー名をメタデータに保存
             }
           }
         });
@@ -79,7 +79,6 @@ export default function AuthForm({ onClose }) {
           throw new Error("登録に失敗しました");
         }
 
-        // ✅ localStorageは使わない
         setMessage("登録成功！ログインしました 🎉");
         setTimeout(() => onClose?.(), 800);
       } else {
@@ -90,11 +89,9 @@ export default function AuthForm({ onClose }) {
 
         if (error) {
           console.error("login error:", error);
-          // ✅ セキュリティのため詳細を隠す
           throw new Error("認証に失敗しました");
         }
 
-        // ✅ localStorageは使わない
         setMessage("ログイン成功！");
         setTimeout(() => onClose?.(), 800);
       }
@@ -108,7 +105,7 @@ export default function AuthForm({ onClose }) {
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-2xl">
       <div className="text-center mb-6">
-        <div className="w-16 h-16 mx-auto bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
+        <div className="w-16 h-16 mx-auto bg-linear-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
           <User className="w-10 h-10 text-white" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-2">
@@ -170,7 +167,7 @@ export default function AuthForm({ onClose }) {
       <button
         onClick={handleSubmit}
         disabled={isLoading}
-        className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? "処理中..." : mode === "signup" ? "登録" : "ログイン"}
       </button>
