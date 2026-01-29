@@ -44,7 +44,7 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex flex-col bg-linear-to-br from-blue-50 to-indigo-100">
       <Header
         isLoggedIn={isLoggedIn}
         mounted={mounted}

@@ -32,11 +32,18 @@ export const beginnerQuestions = [
   {
     id: 4,
     category: "JavaScript初級",
-    question: "JavaScriptで数値を扱うデータ型はどれですか?",
-    options: ["Number", "Integer", "Float", "Numeric"],
-    correct: 0,
-    explanation: "JavaScriptでは数値はすべて Number 型で扱われます。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst a = 'Pen' + 3 * 'Pine' + 'Apple';\nconsole.log(a);",
+    options: [
+      "PenPinePinePineApple",
+      "Pen3PineApple",
+      "PenNaNApple",
+      "エラーになる",
+    ],
+    correct: 2,
+    explanation:
+      "JavaScriptでは、数値と数値以外の文字列を乗算（*）するとNaN（Not a Number）が返されます。その後、文字列結合によって 'Pen' + 'NaN' + 'Apple' となり、'PenNaNApple' が出力されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/NaN#description",
   },
   {
     id: 5,
@@ -59,20 +66,24 @@ export const beginnerQuestions = [
   {
     id: 7,
     category: "JavaScript初級",
-    question: "1行のコメントを書くために使用する記号はどれですか?",
-    options: ["<!-- comment -->", "// comment", "# comment", "<comment>"],
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst a = [1, 2, 3, 4, 5];\nconsole.log(a.slice(1, 4));",
+    options: ["[1, 2, 3, 4]", "[2, 3, 4]", "[2, 3, 4, 5]", "[1, 2, 3]"],
     correct: 1,
-    explanation: "単一行コメントは // を使用します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Grammar_and_types#comments",
+    explanation:
+      "slice(開始インデックス, 終了インデックス) メソッドは、開始位置から終了位置の『直前』までの要素を取り出して新しい配列を返します。この場合、インデックス1（値:2）から4の直前（値:4）までが取り出されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/slice",
   },
   {
     id: 8,
     category: "JavaScript初級",
-    question: "複数行のコメントを書くために使用する記号はどれですか?",
-    options: ["// comment", "<!-- -->", "/* comment */", "# comment"],
-    correct: 2,
-    explanation: "複数行コメントは /* */ を使用します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Grammar_and_types#comments",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nlet x = 10;\n\nif (x === 1) {\n  console.log('yes');\n} else if (x < 10) {\n  console.log('no');\n} else {\n  console.log('yes or yes');\n}",
+    options: ["エラーになる", "yes or yes", "yes", "no"],
+    correct: 1,
+    explanation:
+      "変数xの値は10です。最初のif条件(10 === 1)は偽、次のelse if条件(10 < 10)も偽（10未満ではない）となるため、最終的にelseブロック内の処理が実行されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/if...else",
   },
   {
     id: 9,
@@ -95,11 +106,18 @@ export const beginnerQuestions = [
   {
     id: 11,
     category: "JavaScript初級",
-    question: "値の等価性を比較する演算子はどれですか?",
-    options: ["=", "==", "=>", "!="],
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst words = ['pine', 'apple', 'pen'];\nfor (const word of words) {\n  console.log(word);\n}",
+    options: [
+      "pine\npine\npine",
+      "pine\napple\npen",
+      "['pine', 'apple', 'pen']\n(3回繰り返される)",
+      "エラーになる",
+    ],
     correct: 1,
-    explanation: "== は値の等価比較を行います。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Equality",
+    explanation:
+      "JavaScriptの for...of 文は、配列の各要素を順番に取り出して変数（この場合はword）に代入します。console.logは実行のたびに改行して出力するため、各単語が順番に表示されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for...of",
   },
   {
     id: 12,
@@ -114,29 +132,34 @@ export const beginnerQuestions = [
     id: 13,
     category: "JavaScript初級",
     question:
-      "次のコードは何回実行されますか?\n\nfor(let i=0; i<5; i++) {\n  console.log(i);\n}",
-    options: ["4回", "5回", "6回", "無限ループ"],
-    correct: 1,
-    explanation: "iは0から4まで繰り返され、計5回実行されます。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for",
+      "次のコードを実行した結果として、正しいものはどれか。\n\nfor (let count = 0; count < 3; count++) {\n  console.log(count);\n}",
+    options: ["0\n1\n2\n3", "count 1\ncount 2\ncount 3", "0\n1\n2", "1\n2\n3"],
+    correct: 2,
+    explanation:
+      "JavaScriptのforループでは、countが0から始まり、3未満（0, 1, 2）の間処理が繰り返されます。countが3になった時点で条件式 (count < 3) が偽になるため、ループは終了します。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for",
   },
   {
     id: 14,
     category: "JavaScript初級",
-    question: "関数を定義するために使用するキーワードはどれですか?",
-    options: ["func", "function", "def", "method"],
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nfunction job(arg) {\n  const answer = arg + 1;\n  console.log(answer);\n}\njob(1);",
+    options: ["1", "2", "answer", "エラーになる"],
     correct: 1,
-    explanation: "function キーワードで関数を定義します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Functions",
+    explanation:
+      "関数jobが引数1で呼び出されます。関数内部で1 + 1が計算され、変数answerに2が代入されます。最後にconsole.log(2)が実行されるため、結果は2となります。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Functions",
   },
   {
     id: 15,
     category: "JavaScript初級",
-    question: "関数から値を返すために使用するキーワードはどれですか?",
-    options: ["break", "return", "yield", "output"],
-    correct: 1,
-    explanation: "return は関数の戻り値を指定します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/return",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nfor (let i = 0; i < 4; i++) {\n  if (i === 2) {\n    continue;\n  }\n  console.log(i);\n}",
+    options: ["0\n1\n2\n3", "1\n2\n3\n4", "0\n1\n3", "1\n2\n4"],
+    correct: 2,
+    explanation:
+      "continue文が実行されると、その回の残りの処理（console.log）をスキップして次のループ（iが3の回）へ進みます。そのため、2だけが出力されず、0, 1, 3が表示されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/continue",
   },
   {
     id: 16,
@@ -150,20 +173,24 @@ export const beginnerQuestions = [
   {
     id: 17,
     category: "JavaScript初級",
-    question: "次のコードの出力は何ですか?\n\nconsole.log(typeof 123);",
-    options: ['"number"', '"Number"', '"string"', '"object"'],
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nfunction job(arg) {\n  const answer = arg + 1;\n}\nconsole.log(job(1));",
+    options: ["undefined", "2", "null", "エラーになる"],
     correct: 0,
-    explanation: "typeof 123 は 'number' を返します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/typeof",
+    explanation:
+      "関数内で計算は行われていますが、値を返すための 'return' 文がありません。JavaScriptでは値を返さない関数を呼び出すと、デフォルトで undefined が返されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions#%E6%88%BB%E3%82%8A%E5%80%A4",
   },
   {
     id: 18,
     category: "JavaScript初級",
-    question: "変数が定義されていない状態を表す値はどれですか?",
-    options: ["null", "false", "undefined", "0"],
-    correct: 2,
-    explanation: "undefined は値が未定義であることを表します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nfunction job(a, b = 2) {\n  return a + b;\n}\nconsole.log(job(1));",
+    options: ["エラーになる", "3", "1, 2", "1"],
+    correct: 1,
+    explanation:
+      "この関数では第2引数 b にデフォルト値 2 が設定されています。job(1) と呼び出した場合、aには1が代入され、bにはデフォルト値の2が使われるため、1 + 2 = 3 が返されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/Default_parameters",
   },
   {
     id: 19,
@@ -248,11 +275,13 @@ export const beginnerQuestions = [
   {
     id: 27,
     category: "JavaScript初級",
-    question: "NaNは何を表しますか?",
-    options: ["空文字", "0", "数値ではない", "null"],
-    correct: 2,
-    explanation: "NaN は Not-a-Number を意味します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst num = { one: 1, two: 2 };\nnum['three'] = 3;\nconsole.log(num['three']);",
+    options: ["3", "three", "{ three: 3 }", "エラーになる"],
+    correct: 0,
+    explanation:
+      "JavaScriptのオブジェクトでは、ブラケット記法（['key']）を使って新しいプロパティを追加したり、その値を参照したりできます。ここでは 'three' というキーに 3 を代入しているため、それを出力すると 3 が表示されます。",
+    url: "https://developer.mozilla.org/ja/docs/Learn/JavaScript/Objects/Basics",
   },
   {
     id: 28,
@@ -266,30 +295,24 @@ export const beginnerQuestions = [
   {
     id: 29,
     category: "JavaScript初級",
-    question: "値が配列かどうかを判定する正しいメソッドはどれですか?",
-    options: [
-      "typeof arr",
-      "arr instanceof Array",
-      "isArray(arr)",
-      "Array.isArray(arr)",
-    ],
-    correct: 3,
-    explanation: "Array.isArray() は配列判定に使用されます。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nlet i = 0;\nwhile (i++ < 3) {\n  console.log(i);\n}",
+    options: ["0, 1, 2", "1, 2, 3", "1, 2", "0, 1, 2, 3"],
+    correct: 1,
+    explanation:
+      "whileの条件式 (i++ < 3) では、比較の後にiが加算されます。最初のループでは 0 < 3 を評価した直後に i が 1 になり、console.log(1) が実行されます。これが i が 3 になるまで繰り返されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Increment",
   },
   {
     id: 30,
     category: "JavaScript初級",
-    question: "nullの用途として正しいものはどれですか?",
-    options: [
-      "未定義",
-      "値が存在しないことを意図的に示す",
-      "0と同じ意味",
-      "空文字と同じ意味",
-    ],
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst items = ['A', 'B', 'C'];\nlet res = '';\nfor (const item of items) {\n  if (item === 'B') continue;\n  res += item;\n}\nconsole.log(res);",
+    options: ["ABC", "AC", "B", "A"],
     correct: 1,
-    explanation: "null は「値が存在しない」ことを意図的に示します。",
-    url: "http://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/null",
+    explanation:
+      "for...of 文で配列の要素を順に取り出します。item が 'B' のときに continue が実行されるため、その回の追加処理（res += item）がスキップされ、結果として 'AC' となります。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for...of",
   },
   {
     id: 31,
@@ -326,11 +349,13 @@ export const beginnerQuestions = [
   {
     id: 34,
     category: "JavaScript初級",
-    question: "条件式で偽(falsy)と評価される値はどれですか?",
-    options: ['"0"', "1", "[]", "0"],
-    correct: 3,
-    explanation: "0 は falsy な値です。",
-    url: "http://developer.mozilla.org/ja/docs/Glossary/Falsy",
+    question:
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst arr = [10, 20];\nfor (const x in arr) {\n  console.log(x + 1);\n}",
+    options: ["11, 21", "1, 2", "01, 11", "エラーになる"],
+    correct: 2,
+    explanation:
+      "for...in 文は配列の『インデックス』を文字列として取り出します。そのため、インデックス '0' や '1' に対して + 1 を行うと、数値計算ではなく文字列結合が優先され、'01' や '11' という結果になります。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for...in",
   },
   {
     id: 35,
