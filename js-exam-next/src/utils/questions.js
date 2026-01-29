@@ -33,17 +33,16 @@ export const beginnerQuestions = [
     id: 4,
     category: "JavaScript初級",
     question:
-      "次のコードを実行した結果として、正しいものはどれか。\n\nconst a = 'Pen' + 3 * 'Pine' + 'Apple';\nconsole.log(a);",
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst a = 'Apple' + 3 + 'Pen';\nconsole.log(a);",
     options: [
-      "PenPinePinePineApple",
-      "Pen3PineApple",
-      "PenNaNApple",
-      "エラーになる",
+      "Apple3Pen",
+      "AppleAppleApplePen",
+      "NaN",
+      "エラーになる"
     ],
-    correct: 2,
-    explanation:
-      "JavaScriptでは、数値と数値以外の文字列を乗算（*）するとNaN（Not a Number）が返されます。その後、文字列結合によって 'Pen' + 'NaN' + 'Apple' となり、'PenNaNApple' が出力されます。",
-    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/NaN#description",
+    correct: 0,
+    explanation: "JavaScriptでは、文字列と数値を '+' 演算子でつなぐと、数値が自動的に文字列に変換されて結合されます。そのため、'Apple' と 3 と 'Pen' がそのままつながった結果になります。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Addition",
   },
   {
     id: 5,
@@ -296,12 +295,11 @@ export const beginnerQuestions = [
     id: 29,
     category: "JavaScript初級",
     question:
-      "次のコードを実行した結果として、正しいものはどれか。\n\nlet i = 0;\nwhile (i++ < 3) {\n  console.log(i);\n}",
-    options: ["0, 1, 2", "1, 2, 3", "1, 2", "0, 1, 2, 3"],
+      "次のコードを実行した結果として、正しく出力される数字の組み合わせはどれか。\n\nlet i = 0;\nwhile (i < 5) {\n  i += 2;\n  if (i === 4) {\n    i++;\n  }\n  console.log(i);\n}",
+    options: ["2, 4, 5", "2, 5", "0, 2, 4", "2, 5, 7"],
     correct: 1,
-    explanation:
-      "whileの条件式 (i++ < 3) では、比較の後にiが加算されます。最初のループでは 0 < 3 を評価した直後に i が 1 になり、console.log(1) が実行されます。これが i が 3 になるまで繰り返されます。",
-    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Increment",
+    explanation: "1回目: i=0で開始→i+=2で2に→出力は2。2回目: i=2で継続→i+=2で4に→if文の条件に一致しi++で5に→出力は5。3回目: i=5なので条件(i < 5)を満たさず終了。結果、2と5が出力されます。",
+    url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/while",
   },
   {
     id: 30,
@@ -350,11 +348,10 @@ export const beginnerQuestions = [
     id: 34,
     category: "JavaScript初級",
     question:
-      "次のコードを実行した結果として、正しいものはどれか。\n\nconst arr = [10, 20];\nfor (const x in arr) {\n  console.log(x + 1);\n}",
-    options: ["11, 21", "1, 2", "01, 11", "エラーになる"],
-    correct: 2,
-    explanation:
-      "for...in 文は配列の『インデックス』を文字列として取り出します。そのため、インデックス '0' や '1' に対して + 1 を行うと、数値計算ではなく文字列結合が優先され、'01' や '11' という結果になります。",
+      "次のコードを実行した結果として、正しいものはどれか。\n\nconst arr = ['a', 'b'];\nfor (const x in arr) {\n  console.log(x);\n}",
+    options: ["'a', 'b'", "0, 1", "1, 2", "エラーになる"],
+    correct: 1,
+    explanation: "for...in 文は、配列の要素（値）ではなく、その要素のインデックス（0, 1, 2...）を順番に取り出します。要素そのものを取り出したい場合は for...of 文を使用します。",
     url: "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for...in",
   },
   {
