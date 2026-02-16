@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 type FooterProps = {
   fixed?: boolean; // PCのみ固定するかどうか
 };
@@ -29,7 +27,7 @@ export default function Footer({ fixed = false }: FooterProps) {
           <h4 className="text-lg font-semibold mb-3 text-white">Links</h4>
           <ul className="space-y-2">
             <li>
-              <Link
+              <a
                 href="/"
                 className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 inline-flex items-center group"
               >
@@ -37,7 +35,7 @@ export default function Footer({ fixed = false }: FooterProps) {
                   →
                 </span>
                 Home
-              </Link>
+              </a>
             </li>
             <li>
               <a
