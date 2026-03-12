@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/src/lib/supabaseClient";
-import { useExam } from "@/src/hooks/useExam";
+import { useExam, ExamContext, StudyLevel } from "@/src/hooks/useExam";
 import LevelSelectScreen from "@/src/components/LevelSelect";
 import QuestionView from "@/src/components/QuestionView";
 import ResultView from "@/src/components/ResultView";
@@ -20,12 +20,14 @@ export default function Page() {
   // ✅ Supabaseのセッション管理を使用（localStorageは使用しない）
   useEffect(() => {
     setMounted(true);
-    
+
     // 初回のセッション確認
     checkSession();
-    
+
     // セッション変更を監視
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsLoggedIn(!!session);
     });
 
@@ -33,7 +35,9 @@ export default function Page() {
   }, []);
 
   const checkSession = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     setIsLoggedIn(!!session);
   };
 
@@ -59,9 +63,13 @@ export default function Page() {
           {!exam.selectedLevel ? (
             <LevelSelectScreen exam={exam} isLoggedIn={isLoggedIn} />
           ) : exam.showResult ? (
-            <ResultView exam={exam} />
+            <ResultView
+              exam={exam as ExamContext & { selectedLevel: StudyLevel }}
+            />
           ) : (
-            <QuestionView exam={exam} />
+            <QuestionView
+              exam={exam as ExamContext & { selectedLevel: StudyLevel }}
+            />
           )}
         </div>
       </main>

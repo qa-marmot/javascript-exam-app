@@ -2,35 +2,10 @@
 
 import { CheckCircle, XCircle, X } from "lucide-react";
 import { linkify } from "../utils/linkify";
-import { saveExamResult } from "../lib/saveExamResult"; 
+import { saveExamResult } from "../lib/saveExamResult";
 import { formatQuestionSimple } from "../utils/formatQuestionText";
 import { useRef } from "react";
-
-// --- 型定義 ---
-
-type StudyLevel = "beginner" | "intermediate" | "advanced";
-
-interface Question {
-  id: number;
-  category: string;
-  question: string;
-  options: string[];
-  correct: number;
-  explanation: string;
-  url: string;
-}
-
-interface ExamContext {
-  questionSets: Record<StudyLevel, Question[]>;
-  selectedLevel: StudyLevel;
-  currentQuestion: number;
-  selectedAnswer: number | null;
-  isAnswered: boolean;
-  score: number;
-  handleAnswer: (index: number) => void;
-  handleNext: () => void;
-  handleBackToMenu: () => void;
-}
+import { ExamContext, StudyLevel } from "@/src/hooks/useExam";
 
 interface QuestionViewProps {
   exam: ExamContext;
@@ -50,15 +25,18 @@ export default function QuestionView({ exam }: QuestionViewProps) {
   } = exam;
 
   const savedRef = useRef<boolean>(false);
-  
-  // questions と question の取得を安全に行う
+
+  // ✅ nullガード（これ以降 selectedLevel は StudyLevel として扱われる）
+  if (!selectedLevel) return null;
+
   const questions = questionSets[selectedLevel] || [];
   const question = questions[currentQuestion];
-  
+
+  if (!question) return null;
+
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const canGoNext = isAnswered;
 
-  // 問題文を整形 (戻り値の型に合わせてレンダリング)
   const formattedQuestion = formatQuestionSimple(question.question);
 
   const levelColors: Record<StudyLevel, string> = {
@@ -67,7 +45,6 @@ export default function QuestionView({ exam }: QuestionViewProps) {
     advanced: "from-purple-500 to-purple-600",
   };
 
-  // ✅ handleNext をラップして最後の問題で履歴を保存
   const handleNextWithSave = async (): Promise<void> => {
     const isLastQuestion = currentQuestion === questions.length - 1;
 
@@ -89,8 +66,6 @@ export default function QuestionView({ exam }: QuestionViewProps) {
 
     handleNext();
   };
-
-  if (!question) return null; // 万が一問題がない場合のガード
 
   return (
     <div className="max-w-3xl mx-auto text-gray-900">
@@ -123,27 +98,29 @@ export default function QuestionView({ exam }: QuestionViewProps) {
 
         <div className="p-8">
           <div className="pb-6">
-            {formattedQuestion.map((part: { type: string; content: string }, index: number) => {
-              if (part.type === "code") {
-                return (
-                  <pre
-                    key={index}
-                    className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4 text-sm"
-                  >
-                    <code>{part.content}</code>
-                  </pre>
-                );
-              } else {
-                return (
-                  <h2
-                    key={index}
-                    className="text-xl font-semibold mb-3 text-gray-900"
-                  >
-                    {part.content}
-                  </h2>
-                );
+            {formattedQuestion.map(
+              (part: { type: string; content: string }, index: number) => {
+                if (part.type === "code") {
+                  return (
+                    <pre
+                      key={index}
+                      className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4 text-sm"
+                    >
+                      <code>{part.content}</code>
+                    </pre>
+                  );
+                } else {
+                  return (
+                    <h2
+                      key={index}
+                      className="text-xl font-semibold mb-3 text-gray-900"
+                    >
+                      {part.content}
+                    </h2>
+                  );
+                }
               }
-            })}
+            )}
           </div>
 
           <div className="space-y-3">
@@ -157,17 +134,23 @@ export default function QuestionView({ exam }: QuestionViewProps) {
                   onClick={() => handleAnswer(index)}
                   disabled={isAnswered}
                   className={`w-full text-left p-4 border rounded-xl transition-all ${
-                    isAnswered 
-                      ? "cursor-default" 
+                    isAnswered
+                      ? "cursor-default"
                       : "hover:bg-gray-50 border-gray-300 cursor-pointer"
                   } ${
-                    isAnswered && isCorrect ? "border-green-500 bg-green-50" : "border-gray-300"
+                    isAnswered && isCorrect
+                      ? "border-green-500 bg-green-50"
+                      : "border-gray-300"
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span>{option}</span>
-                    {isAnswered && isCorrect && <CheckCircle className="text-green-500 shrink-0 ml-2" />}
-                    {isAnswered && isSelected && !isCorrect && <XCircle className="text-red-500 shrink-0 ml-2" />}
+                    {isAnswered && isCorrect && (
+                      <CheckCircle className="text-green-500 shrink-0 ml-2" />
+                    )}
+                    {isAnswered && isSelected && !isCorrect && (
+                      <XCircle className="text-red-500 shrink-0 ml-2" />
+                    )}
                   </div>
                 </button>
               );
@@ -184,13 +167,21 @@ export default function QuestionView({ exam }: QuestionViewProps) {
             >
               <div className="flex items-start">
                 {selectedAnswer === question.correct ? (
-                  <CheckCircle className="text-green-500 mr-3 mt-1 shrink-0" size={24} />
+                  <CheckCircle
+                    className="text-green-500 mr-3 mt-1 shrink-0"
+                    size={24}
+                  />
                 ) : (
-                  <XCircle className="text-red-500 mr-3 mt-1 shrink-0" size={24} />
+                  <XCircle
+                    className="text-red-500 mr-3 mt-1 shrink-0"
+                    size={24}
+                  />
                 )}
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-gray-800 mb-2">
-                    {selectedAnswer === question.correct ? "正解です!" : "不正解です"}
+                    {selectedAnswer === question.correct
+                      ? "正解です!"
+                      : "不正解です"}
                   </h3>
                   <p className="text-gray-700 leading-relaxed whitespace-pre-wrap mb-2">
                     {question.explanation}

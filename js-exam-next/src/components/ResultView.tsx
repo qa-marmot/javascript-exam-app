@@ -1,50 +1,16 @@
 "use client";
 
 import { RotateCcw, BookOpen, Home } from "lucide-react";
-
-// --- 型定義 ---
-
-type StudyLevel = "beginner" | "intermediate" | "advanced";
-
-interface Question {
-  id: number; // 回答と紐付けるために必要
-  category: string;
-  question: string;
-  options: string[];
-  correct: number;
-  explanation: string;
-  url: string;
-}
-
-interface Answer {
-  questionId: string;
-  isCorrect: boolean;
-}
-
-interface ScoreResult {
-  level: string;
-  color: string;
-  message: string;
-}
-
-interface ExamContext {
-  questionSets: Record<StudyLevel, Question[]>;
-  selectedLevel: StudyLevel;
-  score: number;
-  answers: Answer[];
-  getScoreLevel: () => ScoreResult;
-  handleReset: () => void;
-  handleBackToMenu: () => void;
-}
-
-interface ResultViewProps {
-  exam: ExamContext;
-}
+import { ExamContext, StudyLevel, AnswerDetail } from "@/src/hooks/useExam";
 
 // 分野別統計の型
 interface CategoryStat {
   total: number;
   correct: number;
+}
+
+interface ResultViewProps {
+  exam: ExamContext;
 }
 
 export default function ResultView({ exam }: ResultViewProps) {
@@ -58,8 +24,12 @@ export default function ResultView({ exam }: ResultViewProps) {
     handleBackToMenu,
   } = exam;
 
+  // ✅ nullガード
+  if (!selectedLevel) return null;
+
   const questions = questionSets[selectedLevel] || [];
   const result = getScoreLevel();
+  if (!result) return null;
 
   // ===== 分野別集計 =====
   const categoryStats: Record<string, CategoryStat> = {};
@@ -71,7 +41,7 @@ export default function ResultView({ exam }: ResultViewProps) {
     categoryStats[q.category].total++;
   });
 
-  answers.forEach((a) => {
+  answers.forEach((a: AnswerDetail) => {
     const question = questions.find((q) => q.id === a.questionId);
     if (!question) return;
     if (a.isCorrect) {
@@ -117,8 +87,8 @@ export default function ResultView({ exam }: ResultViewProps) {
             </h2>
             <div className="space-y-3">
               {Object.entries(categoryStats).map(([category, stats]) => {
-                const percentage = stats.total > 0 
-                  ? Math.round((stats.correct / stats.total) * 100) 
+                const percentage = stats.total > 0
+                  ? Math.round((stats.correct / stats.total) * 100)
                   : 0;
                 return (
                   <div key={category} className="bg-gray-50 rounded-lg p-4">
