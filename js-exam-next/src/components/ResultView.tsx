@@ -7,7 +7,7 @@ import { RotateCcw, BookOpen, Home } from "lucide-react";
 type StudyLevel = "beginner" | "intermediate" | "advanced";
 
 interface Question {
-  id: string; // 回答と紐付けるために必要
+  id: number; // 回答と紐付けるために必要
   category: string;
   question: string;
   options: string[];
